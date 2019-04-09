@@ -8,7 +8,8 @@ public class ParameterValue {
 
     private double value;
     private ParameterValue previous, next;
-    private Double previousWeight, nextWeight;
+    private double previousWeight, nextWeight;
+    private double outerWeight;
     private List<Item> items;
 
 
@@ -16,8 +17,8 @@ public class ParameterValue {
         this.value = value;
         previous = null;
         next = null;
-        previousWeight = null;
-        nextWeight = null;
+        previousWeight = 0.0;
+        nextWeight = 0.0;
 
         items = new ArrayList<>();
         items.add(item);
@@ -66,6 +67,14 @@ public class ParameterValue {
 
     public void setItems(List<Item> items) {
         this.items = items;
+    }
+
+    public double getOuterWeight() {
+        return outerWeight;
+    }
+
+    public void updateOuterWeight(){
+        outerWeight = 1.0/items.size();
     }
 
     @Override

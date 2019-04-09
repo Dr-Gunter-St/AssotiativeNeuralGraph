@@ -32,6 +32,38 @@ public class AssociativeGraph {
 
 
     }
+    
+    public double similarityOf2Items(Item from, Item to){
+
+        double similarity = 0.0;
+
+        for (int i = 0; i < parameters.size(); i++) {
+            ParameterValue valueFrom = from.getValues().get(i);
+            ParameterValue p = valueFrom;
+            ParameterValue valueTo = to.getValues().get(i);
+
+            double weight = 1.0;
+
+            if (valueFrom.getValue() > valueTo.getValue()){
+                while (p.getValue() - valueTo.getValue()  > 0.000000000001){
+                    p = p.getPrevious();
+                    weight *= p.getNextWeight();
+                }
+                similarity += weight*(1.0/parameters.size());
+            } else if (valueFrom.getValue() < valueTo.getValue()){
+                while (p.getValue() - valueTo.getValue() > 0.000000000001){
+                    p = p.getNext();
+                    weight *= p.getPreviousWeight();
+                }
+                similarity += weight*(1.0/parameters.size());
+            } else {
+                similarity += weight*(1.0/parameters.size());
+            }
+
+        }
+
+        return similarity;
+    }
 
     public List<Parameter> getParameters() {
         return parameters;

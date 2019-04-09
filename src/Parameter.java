@@ -88,8 +88,24 @@ public class Parameter {
             currentWeight = 1 - Math.abs(p.getNext().getValue() - p.getValue())/(maxValue-minValue);
             p.setNextWeight(currentWeight);
             p.getNext().setPreviousWeight(currentWeight);
+            p.updateOuterWeight();
             p = p.getNext();
         }
+
+    }
+
+    public ParameterValue getByValue(double value){
+        if (value > maxValue || value < minValue) return null;
+
+        ParameterValue p = min;
+
+        while (p.getValue() != value){
+            p = p.getNext();
+            if (p == null) return p;
+        }
+
+
+        return p;
 
     }
 
@@ -120,5 +136,13 @@ public class Parameter {
         }
 
         return res;
+    }
+
+    public double getMinValue() {
+        return minValue;
+    }
+
+    public double getMaxValue() {
+        return maxValue;
     }
 }

@@ -17,6 +17,8 @@ public class Main {
 
         //System.out.println(associativeGraph.getItems().get(0).toString());
 
+        System.out.println(associativeGraph.similarityOf2Items(associativeGraph.getItems().get(0), associativeGraph.getItems().get(1)));
+
 
     }
 }
