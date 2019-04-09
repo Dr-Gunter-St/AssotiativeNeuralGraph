@@ -20,13 +20,14 @@ public class AssociativeGraph {
             parameters.add(new Parameter(parameterNames.get(i)));
         }
 
-        List<ParameterValue> values = new ArrayList<>();
+        int id = 1;
         for (TrainingInput i: set.getInputs()) {
-            Item newItem = new Item(i.getClassName());
+            Item newItem = new Item(i.getClassName(), id);
             items.add(newItem);
             for (int j = 0; j < i.getInputs().length; j++) {
                 parameters.get(j).addValue(i.getInputs()[j], newItem);
             }
+            id++;
         }
 
 

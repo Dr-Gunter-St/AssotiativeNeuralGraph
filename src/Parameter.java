@@ -21,6 +21,7 @@ public class Parameter {
             max = min;
             minValue = value;
             maxValue = value;
+            item.getValues().add(min);
             return;
         }
 
@@ -38,22 +39,40 @@ public class Parameter {
 
         if (value < p.getValue()){
 
-            //TODO: check nulls
-            p.getPrevious().setNext(newValue);
+            if (p.getPrevious() != null) {
+                p.getPrevious().setNext(newValue);
+                newValue.setPrevious(p.getPrevious());
+            }
             p.setPrevious(newValue);
+            newValue.setNext(p);
 
             newValue.getItems().add(item);
             item.getValues().add(newValue);
+
+            if (newValue.getPrevious() == null){
+                min = newValue;
+                minValue = value;
+            }
+
             recalculateWeights();
         }
         if (value > p.getValue()){
 
-            //TODO: check nulls
-            p.getNext().setPrevious(newValue);
+            if (p.getNext() != null){
+                p.getNext().setPrevious(newValue);
+                newValue.setNext(p.getNext());
+            }
             p.setNext(newValue);
+            newValue.setPrevious(p);
 
             newValue.getItems().add(item);
             item.getValues().add(newValue);
+
+            if (newValue.getNext() == null){
+                max = newValue;
+                maxValue = value;
+            }
+
             recalculateWeights();
         }
 
