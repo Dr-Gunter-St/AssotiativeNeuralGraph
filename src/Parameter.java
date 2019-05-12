@@ -26,12 +26,13 @@ public class Parameter {
         }
 
         ParameterValue p = min;
-        while (p.getValue() < value && p.getNext() != null) p = p.getNext();
+        if (p.getValue() < value) while (p.getValue() < value && p.getNext() != null) p = p.getNext();
+
+        if (p.getValue() > value) while (p.getValue() > value && p.getPrevious() != null) p = p.getPrevious();
 
         if (p.getValue() == value) {
             p.getItems().add(item);
             item.getValues().add(p);
-            p.getItems().add(item);
             return;
         }
 
@@ -46,7 +47,6 @@ public class Parameter {
             p.setPrevious(newValue);
             newValue.setNext(p);
 
-            newValue.getItems().add(item);
             item.getValues().add(newValue);
 
             if (newValue.getPrevious() == null){
@@ -65,7 +65,6 @@ public class Parameter {
             p.setNext(newValue);
             newValue.setPrevious(p);
 
-            newValue.getItems().add(item);
             item.getValues().add(newValue);
 
             if (newValue.getNext() == null){
@@ -144,5 +143,13 @@ public class Parameter {
 
     public double getMaxValue() {
         return maxValue;
+    }
+
+    public ParameterValue getMin() {
+        return min;
+    }
+
+    public ParameterValue getMax() {
+        return max;
     }
 }
